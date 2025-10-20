@@ -303,13 +303,13 @@ class ProcessPool implements Countable
     }
 
     /**
-     * Get the total active process count, including processes pending termination.
+     * Get the total process count
      *
      * @return int
      */
     public function totalProcessCount()
     {
-        return count($this->processes()) + count($this->terminatingProcesses);
+        return count($this->processes());
     }
 
     /**
