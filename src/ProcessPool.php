@@ -69,11 +69,11 @@ class ProcessPool
     {
         $processes = max(0, (int) $processes);
 
-        if ($processes === count($this->processes)) {
+        if ($processes === $this->totalProcessCount()) {
             return;
         }
 
-        if ($processes > count($this->processes)) {
+        if ($processes > $this->totalProcessCount()) {
             $this->scaleUp($processes);
         } else {
             $this->scaleDown($processes);
