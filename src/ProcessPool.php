@@ -4,10 +4,9 @@ namespace Laravel\Horizon;
 
 use Carbon\CarbonImmutable;
 use Closure;
-use Countable;
 use Symfony\Component\Process\Process;
 
-class ProcessPool implements Countable
+class ProcessPool
 {
     /**
      * All of the active processes.
@@ -303,13 +302,13 @@ class ProcessPool implements Countable
     }
 
     /**
-     * Get the total process count
+     * Get the total process count.
      *
      * @return int
      */
     public function totalProcessCount()
     {
-        return count($this->processes());
+        return count($this->processes);
     }
 
     /**
@@ -320,15 +319,5 @@ class ProcessPool implements Countable
     public function queue()
     {
         return $this->options->queue;
-    }
-
-    /**
-     * Count the total number of processes in the pool.
-     *
-     * @return int
-     */
-    public function count(): int
-    {
-        return count($this->processes);
     }
 }
