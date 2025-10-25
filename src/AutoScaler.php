@@ -147,9 +147,9 @@ class AutoScaler
     {
         $supervisor->pruneTerminatingProcesses();
 
-        $totalProcessCount = $pool->totalProcessCount();
-
         $desiredProcessCount = ceil($workers);
+
+        $totalProcessCount = $pool->totalProcessCount();
 
         if ($desiredProcessCount > $totalProcessCount) {
             $maxUpShift = min(

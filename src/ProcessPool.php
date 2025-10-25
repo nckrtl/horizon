@@ -4,9 +4,10 @@ namespace Laravel\Horizon;
 
 use Carbon\CarbonImmutable;
 use Closure;
+use Countable;
 use Symfony\Component\Process\Process;
 
-class ProcessPool
+class ProcessPool implements Countable
 {
     /**
      * All of the active processes.
@@ -69,11 +70,11 @@ class ProcessPool
     {
         $processes = max(0, (int) $processes);
 
-        if ($processes === $this->totalProcessCount()) {
+        if ($processes === count($this->processes)) {
             return;
         }
 
-        if ($processes > $this->totalProcessCount()) {
+        if ($processes > count($this->processes)) {
             $this->scaleUp($processes);
         } else {
             $this->scaleDown($processes);
@@ -302,13 +303,13 @@ class ProcessPool
     }
 
     /**
-     * Get the total process count.
+     * Get the total active process count, including processes pending termination.
      *
      * @return int
      */
     public function totalProcessCount()
     {
-        return count($this->processes);
+        return count($this->processes()) + count($this->terminatingProcesses);
     }
 
     /**
@@ -319,5 +320,15 @@ class ProcessPool
     public function queue()
     {
         return $this->options->queue;
+    }
+
+    /**
+     * Count the total number of processes in the pool.
+     *
+     * @return int
+     */
+    public function count(): int
+    {
+        return count($this->processes);
     }
 }

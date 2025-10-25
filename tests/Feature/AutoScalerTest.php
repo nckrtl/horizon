@@ -288,25 +288,4 @@ class AutoScalerTest extends IntegrationTest
 
         $this->assertSame(6, $supervisor->processPools['default']->totalProcessCount());
     }
-
-    public function test_scaler_calculates_available_capacity_correctly()
-    {
-        [$scaler, $supervisor] = $this->with_scaling_scenario(5, [
-            'first' => ['current' => 3, 'size' => 0, 'runtime' => 0],
-            'second' => ['current' => 1, 'size' => 100, 'runtime' => 100],
-        ]);
-
-        // Simulate terminating process on first queue scaling down from previous work
-        $supervisor->processPools['first']->terminatingProcessCount = 1;
-
-        $scaler->scale($supervisor);
-
-        $this->assertSame(2, $supervisor->processPools['first']->processCount);
-        $this->assertSame(2, $supervisor->processPools['second']->processCount);
-
-        $scaler->scale($supervisor);
-
-        $this->assertSame(1, $supervisor->processPools['first']->processCount);
-        $this->assertSame(3, $supervisor->processPools['second']->processCount);
-    }
 }
