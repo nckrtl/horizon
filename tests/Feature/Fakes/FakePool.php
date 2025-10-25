@@ -32,4 +32,9 @@ class FakePool
     {
         return $this->processCount;
     }
+
+    public function processes()
+    {
+        return collect(range(1, $this->processCount));
+    }
 }
