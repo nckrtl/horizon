@@ -147,9 +147,9 @@ class AutoScaler
     {
         $supervisor->pruneTerminatingProcesses();
 
-        $desiredProcessCount = ceil($workers);
-
         $totalProcessCount = $pool->processes()->count();
+
+        $desiredProcessCount = ceil($workers);
 
         if($desiredProcessCount > $totalProcessCount) {
             $totalProcessCount += $pool->terminatingProcesses()->count();
