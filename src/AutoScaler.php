@@ -151,7 +151,7 @@ class AutoScaler
 
         $desiredProcessCount = ceil($workers);
 
-        if($desiredProcessCount > $totalProcessCount) {
+        if ($desiredProcessCount > $totalProcessCount) {
             $totalProcessCount += $pool->terminatingProcesses()->count();
         }
 
